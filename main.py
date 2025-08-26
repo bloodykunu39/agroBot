@@ -3,10 +3,10 @@ import os
 
 from translators import translate_to_en,translate_to_indic  #translators for en and hi
 from classifier import MobileNetV2Predictor                # crop disease classifier
-from rag import CropDiseaseRAG                         # RAG pipeline      
+# from rag import CropDiseaseRAG                         # RAG pipeline      
 from stt_conformer import stt
 # from tts import ImprovedTTSProcessor,initialize_tts    
-from llm import call_llm                               #qwen llm
+# from llm import call_llm                               #qwen llm
 from tts import tts                                    #tts
 from rag_test import answer_queries
 
@@ -44,7 +44,7 @@ mapping = [
 
 predictor = MobileNetV2Predictor(MODEL_PATH)
 
-rag_system = CropDiseaseRAG()
+# rag_system = CropDiseaseRAG()
 
 # tts_processor = ImprovedTTSProcessor(pipe)
 

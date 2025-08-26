@@ -49,7 +49,7 @@
         }
         .chat-box {
             width: 300px;
-            height: 300px;
+            min-height: 250px;
             background: white;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
@@ -78,6 +78,19 @@
             border: 1px solid #2e7d32;
             font-size: 14px;
         }
+        /* New layout adjustments */
+        .top-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .bottom-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
@@ -93,23 +106,15 @@
     <h1 id="title">🌱 AgroBot</h1>
     <p id="subtitle">Your AI assistant for crops & farming</p>
 
-    <!-- Image Upload Section -->
-    <div class="section">
-        <h3 id="upload-label">📷 Upload Crop Image</h3>
-        <input type="file" id="image-upload" accept="image/*">
-        <br><br>
-        <img id="preview" src="" alt="Uploaded Image" style="max-width:300px; display:none;">
-        <p id="image-result" style="color:green;"></p>
-    </div>
-
-    <!-- Chat style container -->
-    <div class="chat-container">
-
-        <!-- Text Response Box -->
+    <!-- Top row: Image + Audio -->
+    <div class="top-row">
+        <!-- Image Upload Section -->
         <div class="chat-box">
-            <h3 id="response-title">💬 AgroBot Response</h3>
-            <div id="response-text" class="response-text">Waiting for input...</div>
-            <button id="play-response-btn">🔊 Play AgroBot Response</button>
+            <h3 id="upload-label">📷 Upload Crop Image</h3>
+            <input type="file" id="image-upload" accept="image/*">
+            <br><br>
+            <img id="preview" src="" alt="Uploaded Image" style="max-width:300px; display:none;">
+            <p id="image-result" style="color:green;"></p>
         </div>
 
         <!-- Audio Upload Section -->
@@ -119,6 +124,15 @@
             <br><br>
             <audio id="audio-playback" controls style="display:none;"></audio>
             <p id="stt-result" style="color:blue;"></p>
+        </div>
+    </div>
+
+    <!-- Bottom row: Response -->
+    <div class="bottom-row">
+        <div class="chat-box" style="width:400px;">
+            <h3 id="response-title">💬 AgroBot Response</h3>
+            <div id="response-text" class="response-text">Waiting for input...</div>
+            <button id="play-response-btn">🔊 Play AgroBot Response</button>
         </div>
     </div>
 

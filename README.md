@@ -5,6 +5,7 @@ AgroBot is basically an intelligent agricultural assistant that helps farmers id
 # Project Testing
 Our project can be tested by running a kaggle notebook which has all the implementations. The link is here:
 [Notebook implementation](https://www.kaggle.com/code/zoomershredder/chatbot-agrobot)
+If this doesn't work then follow the steps in Installation to clone the repo and setup all model files provided in drive link below.
 
 
 ## Architecture
@@ -261,11 +262,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - **MobileNetV2**: Efficient computer vision
 - **Hugging Face**: Model hosting and transformers
 - **Qwen2.5-Instruct**: Open source LLM
-
-## 📞 Support
-
-For questions and support, please open an issue in the GitHub repository.
-
 ---
 
 **Note**: Ensure you have the required model files and proper hardware setup before running the application. 

@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template, send_from_directory
 import os
-# from stt import shrutam_transcriber # STT 
+
 from translators import translate_to_en,translate_to_indic  #translators for en and hi
 from classifier import MobileNetV2Predictor                # crop disease classifier
 from rag import CropDiseaseRAG                         # RAG pipeline      
@@ -8,8 +8,8 @@ from stt_conformer import stt
 # from tts import ImprovedTTSProcessor,initialize_tts    
 from llm import call_llm                               #qwen llm
 from tts import tts                                    #tts
-# from rag_test import answer_queries
-# Try to import pydub, but handle if FFmpeg is not available
+from rag_test import answer_queries
+
 try:
     from pydub import AudioSegment
     PYDUB_AVAILABLE = True
@@ -125,7 +125,7 @@ def process():
     audio_path = convert_audio_to_wav(audio_path)
 
     try:
-        # ---------- shrutamSTT ----------
+        # ---------- STT ----------
         # hindi_text = shrutam_transcriber(audio_path) 
         hindi_text = stt(audio_path)
         print("##############")
@@ -154,20 +154,21 @@ def process():
         """
 
         # # ---------- RAG ----------
-        rag_response_en = rag_system.search(query, top_k=3)
-        print(rag_response_en)
-        clean_response = [
-            {
-                "crop": item["crop"],
-                "disease": item["disease"],
-                "symptoms": item["symptoms"],
-                "treatment": item["treatment"]
-            }
-            for item in rag_response_en
-        ]
+        # rag_response_en = rag_system.search(query, top_k=3)
+        llm_response = answer_queries(query)
+        # print(rag_response_en)
+        # clean_response = [
+        #     {
+        #         "crop": item["crop"],
+        #         "disease": item["disease"],
+        #         "symptoms": item["symptoms"],
+        #         "treatment": item["treatment"]
+        #     }
+        #     for item in rag_response_en
+        # ]
         print("4")
 
-        llm_response = call_llm(clean_response[0],en_text)
+        # llm_response = call_llm(clean_response[0],en_text)
         # llm_response = answer_queries(predicted_class)
         print("#######################################################")
         print(llm_response)

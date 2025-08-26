@@ -21,7 +21,7 @@ from transformers import AutoModel, AutoTokenizer
 from langchain.embeddings import HuggingFaceEmbeddings
 from sentence_transformers import SentenceTransformer
 import warnings
-from FlagEmbedding import FlagReranker
+# from FlagEmbedding import FlagReranker
 from transformers import AutoModel, AutoTokenizer, T5ForConditionalGeneration
 from tqdm import tqdm
 
@@ -32,7 +32,7 @@ llama3_llm = init_llm()
 
 
 
-
+################################DATABASE CREATION#######################################
 def clean_text(page_content):
     # Step 1: Remove excessive whitespace, tabs, and newlines
     cleaned_text = re.sub(r'\s+', ' ', page_content)
@@ -170,12 +170,15 @@ def clear_database():
     if os.path.exists(CHROMA_PATH):
         print("True")
         shutil.rmtree(CHROMA_PATH)
-# chroma_db = create_database()
 
 
-# Loading the Reranking Model (Also open-sourced from Huggingface) 
-reranker = FlagReranker('BAAI/bge-reranker-v2-m3', use_fp16=True, device=device) 
+chroma_db = create_database()
+###########################################################
 
+
+##############################NOT USING CURRENTLY###################################
+# Loading the Reranking Model
+# reranker = FlagReranker('BAAI/bge-reranker-v2-m3', use_fp16=True, device=device) 
 
 def retrieve_reranked_documents(query, chroma_db, number_of_docs, reranker):
 
@@ -193,8 +196,13 @@ def retrieve_reranked_documents(query, chroma_db, number_of_docs, reranker):
 
     return retrieved_documents
 
+################INSTEAD USING THIS######################
+def retrieve_documents(query, chroma_db, number_of_docs):
+    results = chroma_db.similarity_search(query, k=number_of_docs)
+    retrieved_documents = [(result.page_content, result.metadata["id"]) for result in results]
+    return retrieved_documents
 
-
+########################################################
 
 # Creating mappings for references 
 import pymupdf # PyMuPDF
@@ -257,7 +265,7 @@ def create_mapping(toc):
 
     return mapping
 
-toc = extract_toc("/kaggle/input/rag-dataset/rag.pdf")
+toc = extract_toc(DATA_PATH)
 mapping = create_mapping(toc)
 
 
@@ -266,35 +274,39 @@ mapping = create_mapping(toc)
 
 def query_rag(query, chroma_db, number_of_docs):
 
-    transformed_query = generate_hypothetical_response(query)
-    reranked_documents = retrieve_reranked_documents(transformed_query, chroma_db, 
-                                                     number_of_docs,
-                                                    reranker)
-    
-    final_documents = [doc for doc,  _ , _ in reranked_documents]
+    # transformed_query = generate_hypothetical_response(query)
+    # reranked_documents = retrieve_reranked_documents(transformed_query, chroma_db, 
+    #                                                  number_of_docs,
+    #                                                 reranker)
+    retrieved_documents = retrieve_documents(query, chroma_db, number_of_docs)
 
-    pages = [page.split(":")[1] for _, page, _ in reranked_documents]
+    # CORRECTED: Only unpacking 2 values since retrieve_documents returns (page_content, metadata_id)
+    final_documents = [doc for doc, _ in retrieved_documents]
+
+    # CORRECTED: Extracting page info from the metadata_id (second element)
+    pages = [page_id.split(":")[1] for _, page_id in retrieved_documents]
     context_text = "\n\n".join(final_documents)
 
 
-    # Prompt template for the LLM
-    messages = f""" You are an AI Assistant expert in crop, agriculture science. Your job is to read the crop disease and suggest a proper treatment with precautionary measures.
-    This response is going to be used by a local native farmer so keep the information digestable and concise. 
-        
-        Context: {context_text}
-    
-        Instructions:
-        1. Understand all the context provided to craft your response and ensure relevance.
-        2. Avoid unnecessary repetition in your response.
-        4. Exclude closing phrases such as "Best regards" or "Let me know if I can help you further."
-        
-        Task: Respond to the following question by providing a detailed and relevant answer keeping in mind the context.
+    messages = f"""
+    You are an AI Assistant specialized in crop and agricultural science. 
+    Your task is to read the provided context about crop diseases and give a 
+    direct, concise treatment plan with precautionary measures.
 
-        Question: {query}
-        
-        Answer:
+    Context: {context_text}
 
+    Instructions:
+    1. Answer only the given question using the context.
+    2. Keep the response short, simple, and easy for a local farmer to understand.
+    3. Do not repeat sentences or ideas.
+    4. Do not include any closing remarks, feedback requests, or polite fillers.
+    5. Output only the answer — no extra text.
+
+    Question: {query}
+
+    Answer:
     """
+
     
     response_text = llama3_llm.invoke(input=messages)
     
@@ -359,7 +371,3 @@ def answer_queries(query):
     # print(f"Answer from LLM: {response_text}")
     # print(f"References: {references}")
     return response_text
-
-
-
-

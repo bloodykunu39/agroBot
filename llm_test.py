@@ -1,7 +1,5 @@
 # Define the model path from the kaggle models imported already
 
-########################
-
 import torch
 import langchain
 import os
@@ -21,7 +19,7 @@ from transformers import AutoModel, AutoTokenizer
 from langchain.embeddings import HuggingFaceEmbeddings
 from sentence_transformers import SentenceTransformer
 import warnings
-from FlagEmbedding import FlagReranker
+# from FlagEmbedding import FlagReranker
 from transformers import AutoModel, AutoTokenizer, T5ForConditionalGeneration
 from tqdm import tqdm
 
@@ -30,13 +28,7 @@ model_name = "Qwen/Qwen2.5-3B-Instruct"
 
 ########################
 def load_llama_model_and_tokenizer():
-    # model_config = transformers.AutoConfig.from_pretrained(model_path)
-    # model = transformers.AutoModelForCausalLM.from_pretrained(
-    #     model_path,
-    #     trust_remote_code=True,
-    #     config=model_config,
-    #     device_map='auto',  # Automatically distribute the model across available devices
-    # )
+    
     model = AutoModelForCausalLM.from_pretrained(
     model_name,
     torch_dtype="auto",

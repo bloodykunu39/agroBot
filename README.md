@@ -1,4 +1,4 @@
-# AgroBot - Our AI-Powered Crop Disease Assistant
+# AgroBot - AI-Powered Crop Disease Assistant
 
 AgroBot is basically an intelligent agricultural assistant that helps farmers identify crop diseases through voice interactions and image analysis. The system combines speech recognition, computer vision, and NLP to provide treatment recommendations in local languages (hindi).
 

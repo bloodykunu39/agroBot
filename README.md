@@ -21,6 +21,21 @@ If this doesn't work then follow the steps in Installation to clone the repo and
 
 ## 🏗️ System Architecture
 
+### 🔄 End-to-End Processing Pipeline
+
+```mermaid
+flowchart TD
+    AudioIn["🎤 Hindi Audio Input"] --> STT["1. STT (IndicConformer)"]
+    STT --> TransIn["2. Translate Hi → En (IndicTrans2)"]
+    ImageIn["📷 Crop Leaf Image"] --> CV["3. Image Classification (MobileNetV2)"]
+    TransIn --> RAG["4. RAG Retrieval & Prompting"]
+    CV --> RAG
+    RAG --> LLM["5. LLM Reasoning (Qwen-2.5-Instruct)"]
+    LLM --> TransOut["6. Translate En → Hi (IndicTrans2)"]
+    TransOut --> TTS["7. Text-to-Speech (Piper-TTS)"]
+    TTS --> AudioOut["🔊 Hindi Audio Output (.wav)"]
+```
+
 ```
 Audio Input (Hindi) → STT → Translation (Hi→En) → Disease Classification (Image) → RAG System → LLM → Translation (En→Hi) → TTS → Audio Output (Hindi)
 ```

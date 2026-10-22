@@ -212,6 +212,36 @@ This project stucture is missing some new changes but some new directories are a
 - **Language**: Hindi
 - **Output**: 16kHz WAV files
 
+## 📊 Classifier Evaluation (retrained model)
+
+The MobileNetV2 disease classifier was retrained and evaluated on a held-out test split of the
+[Five Crop Diseases dataset](https://www.kaggle.com/datasets/shubham2703/five-crop-diseases-dataset)
+(13,324 images, 17 classes, 5 crops).
+
+- **Split:** 70 / 15 / 15 (9,318 / 2,001 / 2,005 images), stratified by class. Exact duplicates are removed (none found) and near-duplicates (same 64-bit difference hash) are kept in the same split.
+- **Training:** ImageNet-pretrained MobileNetV2, full fine-tune, AdamW + OneCycle (lr 5e-4), 12 epochs on a Tesla T4. The best epoch is chosen on validation macro-F1; the test split is used once.
+
+| Test set (n = 2,005) | Result |
+|---|---|
+| Accuracy | **97.36%** (95% CI 96.7–98.0) |
+| Macro-F1 | **0.966** (95% CI 0.948–0.979) |
+| Crop identified correctly | 99.95% |
+| CPU latency (batch 1) | 18.9 ms per image |
+| Model size | 2.25 M parameters, 9.2 MB |
+
+Most remaining errors are between diseases of the same crop, mainly rice Brown Spot vs Leaf Blast:
+
+![Confusion matrix](results/confusion_matrix.png)
+
+| File | Contents |
+|---|---|
+| [`results/agrobot_classifier.ipynb`](results/agrobot_classifier.ipynb) | Data checks, split, training, test evaluation, speed |
+| [`results/metrics.json`](results/metrics.json) | All numbers above |
+| [`results/split.csv`](results/split.csv) | Train / val / test assignment of every image |
+| `results/retrained_mobilenetv2.pth` | Retrained weights |
+
+To use the retrained model in the app, set `MODEL_PATH` in `main.py` to `results/retrained_mobilenetv2.pth`. It uses the same checkpoint format (`model_state_dict` + `class_names`).
+
 ## 🎯 Usage Examples
 
 ### Example Workflow

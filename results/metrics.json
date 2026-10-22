@@ -1,0 +1,206 @@
+{
+ "dataset": "shubham2703/five-crop-diseases-dataset",
+ "classes": [
+  "Corn___Common_Rust",
+  "Corn___Gray_Leaf_Spot",
+  "Corn___Healthy",
+  "Corn___Northern_Leaf_Blight",
+  "Potato___Early_Blight",
+  "Potato___Healthy",
+  "Potato___Late_Blight",
+  "Rice___Brown_Spot",
+  "Rice___Healthy",
+  "Rice___Leaf_Blast",
+  "Rice___Neck_Blast",
+  "Sugarcane_Bacterial Blight",
+  "Sugarcane_Healthy",
+  "Sugarcane_Red Rot",
+  "Wheat___Brown_Rust",
+  "Wheat___Healthy",
+  "Wheat___Yellow_Rust"
+ ],
+ "seed": 42,
+ "data": {
+  "n_raw": 13324,
+  "n_unreadable": 0,
+  "n_label_conflict_files": 0,
+  "n_exact_duplicates_removed": 0,
+  "n_images_used": 13324,
+  "n_dhash_groups": 13208,
+  "n_images_in_multi_image_groups": 196
+ },
+ "split_sizes": {
+  "train": 9318,
+  "test": 2005,
+  "val": 2001
+ },
+ "training": {
+  "arch": "mobilenet_v2 (ImageNet-pretrained, full fine-tune)",
+  "epochs": 12,
+  "lr": 0.0005,
+  "optimizer": "AdamW + OneCycle",
+  "batch_size": 64,
+  "best_epoch": 10,
+  "best_val_macro_f1": 0.9724,
+  "history": [
+   {
+    "epoch": 1,
+    "train_loss": 0.8136726425335781,
+    "train_acc": 0.7766688130500108,
+    "val_acc": 0.9255372313843079,
+    "val_macro_f1": 0.8856090026489009,
+    "sec": 43.70721125602722
+   },
+   {
+    "epoch": 2,
+    "train_loss": 0.20949047678503055,
+    "train_acc": 0.9262717321313587,
+    "val_acc": 0.935032483758121,
+    "val_macro_f1": 0.9146203411502549,
+    "sec": 22.918575525283813
+   },
+   {
+    "epoch": 3,
+    "train_loss": 0.17486343069518168,
+    "train_acc": 0.9385061171925306,
+    "val_acc": 0.9375312343828086,
+    "val_macro_f1": 0.929939533272545,
+    "sec": 22.78960084915161
+   },
+   {
+    "epoch": 4,
+    "train_loss": 0.1494907929191622,
+    "train_acc": 0.9471989697359948,
+    "val_acc": 0.9510244877561219,
+    "val_macro_f1": 0.9264477807275106,
+    "sec": 22.820932865142822
+   },
+   {
+    "epoch": 5,
+    "train_loss": 0.13240399783991724,
+    "train_acc": 0.9556771839450526,
+    "val_acc": 0.9575212393803099,
+    "val_macro_f1": 0.9495247790571014,
+    "sec": 22.984886646270752
+   },
+   {
+    "epoch": 6,
+    "train_loss": 0.1036915493180348,
+    "train_acc": 0.9658725048293625,
+    "val_acc": 0.9555222388805598,
+    "val_macro_f1": 0.9433555024319934,
+    "sec": 22.86011266708374
+   },
+   {
+    "epoch": 7,
+    "train_loss": 0.08958160632073457,
+    "train_acc": 0.9702725906846963,
+    "val_acc": 0.9715142428785607,
+    "val_macro_f1": 0.9678162910549171,
+    "sec": 22.703061819076538
+   },
+   {
+    "epoch": 8,
+    "train_loss": 0.07546822626537891,
+    "train_acc": 0.9739214423696072,
+    "val_acc": 0.968015992003998,
+    "val_macro_f1": 0.9688977709099983,
+    "sec": 22.723313808441162
+   },
+   {
+    "epoch": 9,
+    "train_loss": 0.05810577788272879,
+    "train_acc": 0.9789654432281606,
+    "val_acc": 0.9660169915042479,
+    "val_macro_f1": 0.9699395806759542,
+    "sec": 22.640143871307373
+   },
+   {
+    "epoch": 10,
+    "train_loss": 0.04756498967668585,
+    "train_acc": 0.9851899549259497,
+    "val_acc": 0.9715142428785607,
+    "val_macro_f1": 0.9724477789271229,
+    "sec": 22.424639463424683
+   },
+   {
+    "epoch": 11,
+    "train_loss": 0.04187138002652881,
+    "train_acc": 0.9863704657651856,
+    "val_acc": 0.9710144927536232,
+    "val_macro_f1": 0.9723159699061632,
+    "sec": 22.572599172592163
+   },
+   {
+    "epoch": 12,
+    "train_loss": 0.04105859342982493,
+    "train_acc": 0.9866924232667954,
+    "val_acc": 0.9710144927536232,
+    "val_macro_f1": 0.9722289440294613,
+    "sec": 22.548742532730103
+   }
+  ]
+ },
+ "test": {
+  "n": 2005,
+  "accuracy": 0.9736,
+  "accuracy_95ci": [
+   0.9666,
+   0.98
+  ],
+  "macro_f1": 0.9656,
+  "macro_f1_95ci": [
+   0.9483,
+   0.9791
+  ],
+  "weighted_f1": 0.9735,
+  "top3_accuracy": 1.0,
+  "crop_level_accuracy": 0.9995,
+  "per_class_f1": {
+   "Corn___Common_Rust": 0.9974,
+   "Corn___Gray_Leaf_Spot": 0.9333,
+   "Corn___Healthy": 1.0,
+   "Corn___Northern_Leaf_Blight": 0.9667,
+   "Potato___Early_Blight": 1.0,
+   "Potato___Healthy": 0.9767,
+   "Potato___Late_Blight": 0.9966,
+   "Rice___Brown_Spot": 0.8958,
+   "Rice___Healthy": 0.9505,
+   "Rice___Leaf_Blast": 0.8905,
+   "Rice___Neck_Blast": 1.0,
+   "Sugarcane_Bacterial Blight": 1.0,
+   "Sugarcane_Healthy": 0.9091,
+   "Sugarcane_Red Rot": 0.9167,
+   "Wheat___Brown_Rust": 0.9926,
+   "Wheat___Healthy": 0.9971,
+   "Wheat___Yellow_Rust": 0.9924
+  },
+  "per_class_support": {
+   "Corn___Common_Rust": 192,
+   "Corn___Gray_Leaf_Spot": 78,
+   "Corn___Healthy": 171,
+   "Corn___Northern_Leaf_Blight": 147,
+   "Potato___Early_Blight": 169,
+   "Potato___Healthy": 21,
+   "Potato___Late_Blight": 146,
+   "Rice___Brown_Spot": 99,
+   "Rice___Healthy": 230,
+   "Rice___Leaf_Blast": 141,
+   "Rice___Neck_Blast": 136,
+   "Sugarcane_Bacterial Blight": 12,
+   "Sugarcane_Healthy": 10,
+   "Sugarcane_Red Rot": 13,
+   "Wheat___Brown_Rust": 135,
+   "Wheat___Healthy": 173,
+   "Wheat___Yellow_Rust": 132
+  }
+ },
+ "speed": {
+  "params_millions": 2.25,
+  "checkpoint_mb": 9.2,
+  "cpu_latency_ms_batch1": 18.9,
+  "cpu_threads": 2,
+  "gpu": "Tesla T4",
+  "gpu_images_per_sec_fp16_bs64": 1994
+ }
+}

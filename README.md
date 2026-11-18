@@ -218,6 +218,8 @@ The MobileNetV2 disease classifier was retrained and evaluated on a held-out tes
 [Five Crop Diseases dataset](https://www.kaggle.com/datasets/shubham2703/five-crop-diseases-dataset)
 (13,324 images, 17 classes, 5 crops).
 
+**Run it on Kaggle:** [agrobot-crop-disease-mobilenetv2](https://www.kaggle.com/code/bloodykunu/agrobot-crop-disease-mobilenetv2) (full training and evaluation run, with outputs).
+
 - **Split:** 70 / 15 / 15 (9,318 / 2,001 / 2,005 images), stratified by class. Exact duplicates are removed (none found) and near-duplicates (same 64-bit difference hash) are kept in the same split.
 - **Training:** ImageNet-pretrained MobileNetV2, full fine-tune, AdamW + OneCycle (lr 5e-4), 12 epochs on a Tesla T4. The best epoch is chosen on validation macro-F1; the test split is used once.
 
@@ -235,7 +237,7 @@ Most remaining errors are between diseases of the same crop, mainly rice Brown S
 
 | File | Contents |
 |---|---|
-| [`results/agrobot_classifier.ipynb`](results/agrobot_classifier.ipynb) | Data checks, split, training, test evaluation, speed |
+| [`results/agrobot_classifier.ipynb`](results/agrobot_classifier.ipynb) | Data checks, split, training, test evaluation, speed ([Kaggle run](https://www.kaggle.com/code/bloodykunu/agrobot-crop-disease-mobilenetv2)) |
 | [`results/metrics.json`](results/metrics.json) | All numbers above |
 | [`results/split.csv`](results/split.csv) | Train / val / test assignment of every image |
 | `results/retrained_mobilenetv2.pth` | Retrained weights |
